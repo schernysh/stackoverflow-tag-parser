@@ -1,10 +1,10 @@
-import com.google.common.collect.ConcurrentHashMultiset;
-import com.google.common.collect.Multiset;
+import com.google.common.util.concurrent.AtomicLongMap;
 import org.cloudgarden.sotagparser.model.Question;
 import org.cloudgarden.sotagparser.model.Wrapper;
 import org.cloudgarden.sotagparser.service.StackoverflowService;
 
 import java.util.Comparator;
+import java.util.Map;
 
 import static java.lang.String.format;
 
@@ -18,24 +18,24 @@ public class App {
         int maxPageNum = 10;
         int topNumber = 5;
 
-        String query = "java generics";
+        String query = "chain of responsibility";
 
         final StackoverflowService stackoverflowService = new StackoverflowService();
 
-        final Multiset<String> tags = ConcurrentHashMultiset.create();
+        final AtomicLongMap<String> tags = AtomicLongMap.create();
 
         Wrapper<Question> searchResult;
         int page = 1;
 
         do {
             searchResult = stackoverflowService.search(query, page++, pageSize);
-            searchResult.getItems().stream().flatMap(q -> q.getTags().stream()).forEach(tags::add);
+            searchResult.getItems().stream().flatMap(q -> q.getTags().stream()).forEach(tags::incrementAndGet);
         } while (searchResult.isHas_more() && page <= maxPageNum);
 
-        tags.entrySet().stream()
-                .sorted(Comparator.<Multiset.Entry<String>>comparingInt(Multiset.Entry::getCount).reversed())
+        tags.asMap().entrySet().stream()
+                .sorted(Comparator.<Map.Entry<String, Long>>comparingLong(Map.Entry::getValue).reversed())
                 .limit(topNumber)
-                .map(e -> format("%s x %d", e.getElement(), e.getCount()))
+                .map(e -> format("%s x %d", e.getKey(), e.getValue()))
                 .forEach(System.out::println);
     }
 }
