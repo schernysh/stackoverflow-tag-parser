@@ -17,4 +17,4 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-mainClassName = 'App'
+mainClassName = 'org.cloudgarden.sotagparser.App'
