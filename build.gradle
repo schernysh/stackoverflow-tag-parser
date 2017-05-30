@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-//    compile 'com.google.guava:guava:21.0'
+    compile 'com.google.guava:guava:22.0'
     compile 'org.jodd:jodd-http:3.8.5'
     compile 'org.jodd:jodd-json:3.8.5'
 
