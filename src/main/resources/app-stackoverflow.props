@@ -1,0 +1,6 @@
+[stackoverflowService]
+
+rootUrl=https://api.stackexchange.com
+advancedSearchEnpoint=/2.2/search/advanced
+siteQueryParam=stackoverflow
+filterQueryParam=!RsF46KGDD

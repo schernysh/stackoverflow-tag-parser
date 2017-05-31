@@ -10,6 +10,8 @@ dependencies {
     compile 'com.google.guava:guava:22.0'
     compile 'org.jodd:jodd-http:3.8.5'
     compile 'org.jodd:jodd-json:3.8.5'
+    compile 'org.jodd:jodd-petite:3.8.5'
+    compile 'org.jodd:jodd-props:3.8.5'
     compile 'one.util:streamex:0.6.5'
 
     compileOnly 'org.projectlombok:lombok:1.16.16'

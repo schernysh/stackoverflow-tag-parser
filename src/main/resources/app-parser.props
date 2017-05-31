@@ -1,0 +1,5 @@
+[parserService]
+
+pageSize=5
+maxPageNum=10
+topNumber=5
