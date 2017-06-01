@@ -12,7 +12,7 @@ import org.cloudgarden.sotagparser.service.ParserService;
 public class App {
 
     public static void main(String[] args) {
-        final String query = "java generics";
+        final String query = getQueryOrDie(args);
 
         final PetiteContainer petite = new PetiteContainer();
         new AutomagicPetiteConfigurator().configure(petite);
@@ -22,5 +22,15 @@ public class App {
         petite.defineParameters(props);
 
         petite.getBean(ParserService.class).parseAndPrint(query);
+    }
+
+    private static String getQueryOrDie(String[] args) {
+        if (args.length == 1) {
+            return args[0];
+        } else {
+            System.out.println("ERROR: There should be only one argument - a query string");
+            System.exit(255);
+            return null; // to satisfy the compiler
+        }
     }
 }
