@@ -19,10 +19,10 @@ public class StackoverflowService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private String rootUrl;
-    private String advancedSearchEnpoint;
-    private String siteQueryParam;
-    private String filterQueryParam;
+    protected String rootUrl;
+    protected String advancedSearchEnpoint;
+    protected String siteQueryParam;
+    protected String filterQueryParam;
 
     @SuppressWarnings("unchecked")
     public Wrapper<Question> search(String query, int page, int pageSize) {

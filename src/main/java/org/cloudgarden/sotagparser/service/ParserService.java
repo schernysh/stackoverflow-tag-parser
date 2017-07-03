@@ -27,6 +27,9 @@ public class ParserService {
     @PetiteInject
     private StackoverflowService stackoverflowService;
 
+    @PetiteInject
+    private MetricsService metrics;
+
     public void parseAndPrint(String query) {
         IntStreamEx.rangeClosed(1, maxPageNum)
                 .mapToObj(page -> stackoverflowService.search(query, page, pageSize))
@@ -39,5 +42,11 @@ public class ParserService {
                 .limit(topNumber)
                 .map(e -> format("%s x %d", e.getKey(), e.getValue()))
                 .forEach(logger::info);
+
+        logger.debug("HTTP requests statistics:");
+        logger.debug(format("%-39s%-9s%-8s", "request", "count", "avg time (ms)"));
+        metrics.getTimers().entrySet().stream()
+                .map(t -> format("%-39s%-9d%-8.2f", t.getKey(), t.getValue().getCount(), t.getValue().getSnapshot().getMean() / 1_000_000))
+                .forEach(logger::debug);
     }
 }
