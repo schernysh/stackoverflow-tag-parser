@@ -1,5 +1,7 @@
 package org.cloudgarden.sotagparser;
 
+import jodd.log.LoggerFactory;
+import jodd.log.impl.Slf4jLoggerFactory;
 import jodd.petite.PetiteContainer;
 import jodd.petite.config.AutomagicPetiteConfigurator;
 import jodd.props.Props;
@@ -13,6 +15,8 @@ public class App {
 
     public static void main(String[] args) {
         final String query = getQueryOrDie(args);
+
+        LoggerFactory.setLoggerFactory(new Slf4jLoggerFactory());
 
         final PetiteContainer petite = new PetiteContainer();
         new AutomagicPetiteConfigurator().configure(petite);

@@ -1,5 +1,7 @@
 package org.cloudgarden.sotagparser.service;
 
+import jodd.log.Logger;
+import jodd.log.LoggerFactory;
 import jodd.petite.meta.PetiteBean;
 import jodd.petite.meta.PetiteInject;
 import one.util.streamex.IntStreamEx;
@@ -15,6 +17,8 @@ import static java.util.Comparator.reverseOrder;
  */
 @PetiteBean
 public class ParserService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private int pageSize;
     private int maxPageNum;
@@ -34,6 +38,6 @@ public class ParserService {
                 .sorted(Map.Entry.comparingByValue(reverseOrder()))
                 .limit(topNumber)
                 .map(e -> format("%s x %d", e.getKey(), e.getValue()))
-                .forEach(System.out::println);
+                .forEach(logger::info);
     }
 }
