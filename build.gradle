@@ -31,5 +31,7 @@ dependencies {
 mainClassName = 'org.cloudgarden.sotagparser.App'
 
 run {
-    args "${query}"
+    if (project.hasProperty('query')) {
+        args query
+    }
 }
